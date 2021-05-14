@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Accordion = ({ items }) => {
 
+    const [activeIndex, setActiveIndex] = useState(null);
+
+    const onTitleClick = index => {
+        setActiveIndex(index)
+    }
+
     const renderedItem = items.map((item, index) => {
-
-        const onTitleClick = index => {
-            console.log('Title clicked', index)
-        }
-
         return <React.Fragment key={item.title}>
             <div className="title active" onClick={() => onTitleClick(index)}>
                 <i className="dropdown icon"></i>
@@ -22,6 +23,7 @@ const Accordion = ({ items }) => {
     return (
         <div className="ui styled accordion">
             {renderedItem}
+            <h1>{activeIndex}</h1>
         </div>
     )
 }
