@@ -4,9 +4,9 @@ import axios from 'axios';
 const Search = () => {
 
     const [term, setTerm] = useState('programming')
-    const [result, setResult] = useState([])
+    const [results, setResults] = useState([])
 
-    console.log(result)
+    console.log(results)
 
     useEffect(() => {
 
@@ -21,13 +21,27 @@ const Search = () => {
                 }
             })
 
-            setResult(data.query.search)
+            setResults(data.query.search)
         }
 
         search()
         
         
     }, [term])
+
+    const rederedResults = results.map((result) => {
+        return (
+            <div key={result.pageid} className="item">
+                <div className="content">
+                    <div className="header">
+                        {result.title}
+                    </div>
+                    <span dangerouslySetInnerHTML={{ __html: result.snippet }}>
+                    </span>  
+                </div>
+            </div>
+        )
+    })
 
     return (
         <div>
@@ -36,6 +50,9 @@ const Search = () => {
                     <label>Enter search term</label>
                     <input value={term} onChange={(e) => setTerm(e.target.value)} />
                 </div>
+            </div>
+            <div className="ui celled list">
+                {rederedResults}
             </div>
         </div>
     )
